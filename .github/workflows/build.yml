@@ -30,7 +30,7 @@ jobs:
           sudo apt update
           sudo apt install -y wget apktool zipalign apksigner
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Run build script and sign apk
         env:
           KEY_PASS: ${{ secrets.KEYSTORE_PASSPHRASE }}
