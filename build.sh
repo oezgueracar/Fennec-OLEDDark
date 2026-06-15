@@ -13,7 +13,7 @@ sed -i 's/<color name="fx_mobile_surface_container">.*/<color name="fx_mobile_su
 sed -i 's/<color name="fx_mobile_layer_color_2">.*/<color name="fx_mobile_layer_color_2">@color\/photonDarkGrey90<\/color>/g' patched/res/values-night/colors.xml
 sed -i 's/<color name="fx_mobile_surface_bright">.*/<color name="fx_mobile_surface_bright">@color\/photonDarkGrey90<\/color>/g' patched/res/values-night/colors.xml
 sed -i 's/<color name="fx_mobile_action_color_secondary">.*/<color name="fx_mobile_action_color_secondary">#ff25242b<\/color>/g' patched/res/values-night/colors.xml
-sed -i -z 's/.mozac-readerview-body.dark {\n  background-color: #1c1b22;/.mozac-readerview-body.dark {\n  background-color: #000000;/g' patched/assets/extensions/readerview/readerview.css
+sed -i -z "s/.mozac-readerview-body.dark {\n  background-color: #1c1b22;/.mozac-readerview-body.dark {\n  background-color: #000000;/g" patched/assets/extensions/readerview/readerview.css
 loc=$(find ./patched -name "PhotonColors.smali" -type f -print -quit)
 sed -i 's/ff1c1b22/ff000000/g' "$loc"
 sed -i 's/ff2b2a33/ff000000/g' "$loc"
