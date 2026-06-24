@@ -20,18 +20,18 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           latest_tag=$(gh release view --repo ${{ github.repository }} --json tagName -q ".tagName" 2>/dev/null || echo "")
-          echo "tag_name=$latest_tag" >> $GITHUB_OUTPUT
+          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
       
       - name: Get latest Fennec release version
         id: getFennec
         run: |
           version=$(curl -s https://f-droid.org/repo/index-v1.json | jq -r '.packages."org.mozilla.fennec_fdroid" | map(select(any(.nativecode[]; . == "arm64-v8a"))) | max_by(.versionCode) | .versionName + "-" + (.versionCode | tostring)')
-          echo "build_version=$version" >> $GITHUB_ENV
+          echo "build_version=$version" >> $GITHUB_OUTPUT
       
       - name: Check if latest version was already built
         id: compare
         run: |
-          if [ "${{ steps.getLatest.outputs.tag_name }}" == "${{ steps.getFennec.outputs.build_version }}" ]; then
+          if [ "$LATEST_TAG" == "${{ steps.getFennec.outputs.build_version }}" ]; then
             echo "Latest version already built and released."
             echo "build_needed=false" >> $GITHUB_OUTPUT
           else
