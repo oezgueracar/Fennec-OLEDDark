@@ -4,7 +4,7 @@ set -euo pipefail
 apk=$(curl -s https://f-droid.org/repo/index-v1.json | jq -r '.packages."org.mozilla.fennec_fdroid" | map(select(any(.nativecode[]; . == "arm64-v8a"))) | max_by(.versionCode).apkName')
 wget -q "https://fdroid.org/repo/$apk" -O latest.apk
 wget -q https://github.com/iBotPeaches/Apktool/releases/download/v3.0.3/apktool_3.0.3.jar -O apktool.jar
-wget -q https://raw.githubusercontent.com/iBotPeaches/Apktool/main/scripts/linux/apktool -O apktool
+wget -q https://raw.githubusercontent.com/iBotPeaches/Apktool/main/scripts/linux/apktool
 chmod +x apktool*
 rm -rf patched patched_signed.apk
 ./apktool d latest.apk -o patched
@@ -23,8 +23,6 @@ sed -i 's/ff1c1b22/ff000000/g' "$loc"
 sed -i 's/ff2b2a33/ff000000/g' "$loc"
 sed -i 's/ff42414d/ff15141a/g' "$loc"
 sed -i 's/ff52525e/ff15141a/g' "$loc"
-sed -i 's/mipmap\/ic_launcher_round/drawable\/ic_launcher_foreground/g' patched/res/drawable/splash_screen.xml
-sed -i 's/160\.0dip/200\.0dip/g' patched/res/drawable/splash_screen.xml
 
 ./apktool b patched -o patched.apk
 zipalign 4 patched.apk patched_signed.apk
